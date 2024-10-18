@@ -231,7 +231,29 @@ class myHashMap<K,V> {
          * return value is returned the invoking function based on the remove outcome.
          */
 
-        return null;
+         int index = getBucketIndex(key);
+         HashNode<K, V> head = bucket.get(index);
+         HashNode<K, V> prev = null;
+     
+         //Iterate through the linked list
+         while (head != null) {
+             //If the key is found, remove it
+             if (head.key.equals(key)) {
+                 if (prev != null) {
+                     prev.next = head.next;
+                 } else {
+                    //Update the head if it's the first node
+                     bucket.set(index, head.next);
+                 }
+                 //Decrease size after removal
+                 size--;
+                 return head.value;
+             }
+             prev = head;
+             head = head.next;
+         }
+         //If key not found
+         return null;
     }
 
 
@@ -406,7 +428,21 @@ class myHashMap<K,V> {
          * replace (see method's prologue above).
          */
 
-        return val;
+         int index = getBucketIndex(key);
+         HashNode<K, V> head = bucket.get(index);
+         //Traverse the linked list for the given bucket
+         while (head != null) {
+             //If key is found, replace the value
+             if (head.key.equals(key)) {
+                 V oldValue = head.value;
+                 head.value = val;
+                 //Return the old value
+                 return oldValue; 
+             }
+             head = head.next;
+         }
+         //If key not found
+         return null; 
     }
 
     
@@ -434,7 +470,19 @@ class myHashMap<K,V> {
          * value 'oldval', and is so, it SHOULD call replace(K, V) for code reuse.
          */
 
-        return false;
+         int index = getBucketIndex(key);
+         HashNode<K, V> head = bucket.get(index);
+         //Traverse the linked list for the given bucket
+         while (head != null) {
+             //If key is found and the value matches oldVal replace it with newVal
+             if (head.key.equals(key) && head.value.equals(oldVal)) {
+                 head.value = newVal;
+                 return true;
+             }
+             head = head.next;
+         }
+         //If key or old val not found
+         return false; 
     }
 
 

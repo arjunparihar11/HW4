@@ -41,7 +41,22 @@ class HashingProblems {
          * returning 0.0/0.0 IS correct (which would return a non-number).
          */
 
-         return 0.0 / 0.0;
+        int sum = 0;
+        int count = 0;
+        //Iterate over the array and check if the key exists in the HashMap
+        for (int key : array) {
+            if (map.containsKey(key)) {
+                //Add the value to the sum and increase the count of keys
+                sum += map.get(key);  
+                count++;
+            }
+        }
+        //If no common keys are found
+        if (count == 0) {
+            return 0.0 / 0.0;
+        }
+        //Otherwise return the average of the found values
+        return (double) sum / count;
   }
 
 
@@ -62,8 +77,15 @@ class HashingProblems {
        * Hint: Consider iterating over the HashMap using the keySet method.
        */
 
-
-      return result;
+       //Iterate through the keys in the HashMap
+       for (int key : map.keySet()) {
+           //Check if the key is odd
+           if (key % 2 != 0) {
+               //Add the value to the results
+               result.add(map.get(key));
+           }
+       }
+       return result;
   }
 
 
@@ -110,7 +132,19 @@ class HashingProblems {
        * ADD YOUR CODE HERE
        */
 
-      return -1;
+       HashSet<Integer> set = new HashSet<>();
+       int count = 0;
+       //Fill the HashSet with all numbers
+       for (int num : numbers) {
+           set.add(num);
+       }
+       //Check for pairs with the difference of k
+       for (int num : numbers) {
+           if (set.contains(num - k)) {
+               count++;
+           }
+       }
+       return count;
   }
 
 } /* end class HashingProblems */
